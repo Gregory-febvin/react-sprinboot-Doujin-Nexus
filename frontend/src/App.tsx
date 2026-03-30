@@ -16,9 +16,9 @@ function App() {
     <Routes>
       <Route path={ROUTES.HOME} element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path={ROUTES.SAUCE} element={<Sauce />} />
+        {/* <Route path={ROUTES.SAUCE} element={<Sauce />} />
         <Route path={ROUTES.SAUCE_THUMBNAIL} element={<ImageFrame />} />
-        <Route path={ROUTES.SAUCE_NAME} element={<Browsing />} />
+        <Route path={ROUTES.SAUCE_NAME} element={<Browsing />} /> */}
       </Route>
     </Routes>
   );

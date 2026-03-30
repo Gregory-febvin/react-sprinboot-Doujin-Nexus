@@ -9,9 +9,9 @@ export default function Layout() {
     <div className="flex flex-col h-full">
       <Header />
       <Tabs />
-      {/* <div className="content">
+      <div className="content">
         <Outlet />
-      </div> */}
+      </div>
     </div>
   );
 }
