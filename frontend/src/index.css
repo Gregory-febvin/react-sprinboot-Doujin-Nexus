@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@theme {
+  --color-pink-50: #0d0d0d;
+}
+
+@layer base {
+  body {
+    @apply bg-pink-50;
+    @apply text-stone-50;
+    @apply overflow-hidden;
+  }
+}
