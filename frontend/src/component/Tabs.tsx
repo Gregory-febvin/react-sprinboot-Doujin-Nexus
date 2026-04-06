@@ -1,20 +1,25 @@
-// Tabs.jsx
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
-export default function Header() {
-  const navigate = useNavigate();
-  
+const TAB_LINKS = [
+  { to: '/random', label: 'Aléatoire' },
+  { to: '/parodies', label: 'Séries' },
+  { to: '/tags', label: 'Tags' },
+  { to: '/characters', label: 'Personnages' },
+  { to: '/artists', label: 'Artistes' },
+  { to: '/groups', label: 'Groupes' },
+  { to: '/info', label: 'Aide' },
+];
+
+export default function Tabs() {
   return (
     <div className="flex bg-neutral-700">
-        <div className="flex ml-[20%] max-w-[65%]">
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/random`)}>Aléatoire</a></div>
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/parodies`)}>Séries</a></div>
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/tags`)}>Tags</a></div>
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/characters`)}>Personnages</a></div>
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/artists`)}>Artistes</a></div>
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/groups`)}>Groupes</a></div>
-            <div className="p-[15px] cursor-pointer"><a style={{ cursor: 'pointer' }} onClick={() => navigate(`/info`)}>Aide</a></div>
-        </div>
+      <div className="flex ml-[20%] max-w-[65%]">
+        {TAB_LINKS.map(({ to, label }) => (
+          <div key={to} className="p-[15px]">
+            <Link to={to}>{label}</Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

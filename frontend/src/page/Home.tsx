@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { fetchMangaList } from '../services/api';
+import type { Manga } from '../types';
 
 export default function Home() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<Manga[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8080/api/manga')
-      .then(res => setItems(res.data))
-      .catch(err => console.error('Erreur:', err));
+    fetchMangaList()
+      .then(data => setItems(data))
+      .catch(err => {
+        console.error('Erreur:', err);
+        setError('Impossible de charger les mangas.');
+      })
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) return <p className="text-center mt-10">Chargement...</p>;
+  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
 
   return (
     <div className="flex flex-wrap justify-center gap-5 w-4/5 mx-auto mt-[1%]">

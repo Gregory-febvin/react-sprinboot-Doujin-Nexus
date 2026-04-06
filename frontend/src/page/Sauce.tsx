@@ -1,25 +1,33 @@
-// Sauce.jsx
-import { Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchManga } from '../services/api';
+import type { Manga } from '../types';
 
 import Infos from '../component/Infos';
 import Thumbnail from '../component/Thumbnails';
 
 export default function Sauce() {
   const { id } = useParams();
-  const [sauce, setSauce] = useState(null);
+  const [sauce, setSauce] = useState<Manga | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    axios(`http://127.0.0.1:8080/api/manga/${id}`)
-      .then(res => setSauce(res.data))
-      .catch(err => console.error('Erreur:', err));
+    if (id) {
+      fetchManga(id)
+        .then(data => setSauce(data))
+        .catch(err => {
+          console.error('Erreur:', err);
+          setError('Impossible de charger le manga.');
+        });
+    }
   }, [id]);
+
+  if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
 
   return (
   <div className='sauce'>
     <Infos sauce={sauce} />
-    {/* <Thumbnail sauce={sauce}/> */}
+    <Thumbnail sauce={sauce} />
   </div>
   );
 }
