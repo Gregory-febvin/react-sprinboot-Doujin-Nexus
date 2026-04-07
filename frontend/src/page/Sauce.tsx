@@ -19,7 +19,7 @@ export default function Sauce() {
   return (
   <div className='sauce'>
     <Infos sauce={sauce} />
-    {/* <Thumbnail sauce={sauce}/> */}
+    <Thumbnail sauce={sauce}/>
   </div>
   );
 }

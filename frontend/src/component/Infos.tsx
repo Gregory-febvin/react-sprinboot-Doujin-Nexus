@@ -42,7 +42,7 @@ export default function Infos({sauce}) {
                     <a 
                       key={index} 
                       className='inline-flex h-7' 
-                      href={`/artist/${artist.name}`}
+                      href={`/artists/${artist.name}`}
                     >
                       <span className='bg-[#4d4d4d] px-2 py-1 flex items-center rounded-tl rounded-bl whitespace-nowrap'>{artist.name}</span>
                       <span className='bg-[#333] px-2 py-1 flex items-center text-xs text-[#ccc] rounded-tr rounded-br whitespace-nowrap'>35K</span>
@@ -80,7 +80,7 @@ export default function Infos({sauce}) {
                     <a 
                       key={index} 
                       className='inline-flex h-7' 
-                      href={`/parodie/${parody.name}`}
+                      href={`/parodies/${parody.name}`}
                     >
                       <span className='bg-[#4d4d4d] px-2 py-1 flex items-center rounded-tl rounded-bl whitespace-nowrap'>{parody.name}</span>
                       <span className='bg-[#333] px-2 py-1 flex items-center text-xs text-[#ccc] rounded-tr rounded-br whitespace-nowrap'>35K</span>
@@ -115,7 +115,7 @@ export default function Infos({sauce}) {
                     <a 
                       key={index} 
                       className='inline-flex h-7' 
-                      href={`/tag/${tag.name}`}
+                      href={`/tags/${tag.name}`}
                     >
                       <span className='bg-[#4d4d4d] px-2 py-1 flex items-center rounded-tl rounded-bl whitespace-nowrap'>{tag.name}</span>
                       <span className='bg-[#333] px-2 py-1 flex items-center text-xs text-[#ccc] rounded-tr rounded-br whitespace-nowrap'>35K</span>

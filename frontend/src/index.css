@@ -7,6 +7,6 @@
   body {
     @apply bg-pink-50;
     @apply text-stone-50;
-    @apply overflow-hidden;
+    @apply overflow-x-hidden;
   }
 }

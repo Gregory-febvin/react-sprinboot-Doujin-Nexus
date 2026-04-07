@@ -2,15 +2,25 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-export default function Home() {
+interface HomeProps {
+  items?: any[];
+}
+
+export default function Home({ items: propItems }: HomeProps) {
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://127.0.0.1:8080/api/manga')
-      .then(res => setItems(res.data))
-      .catch(err => console.error('Erreur:', err));
-  }, []);
+    if (propItems && propItems.length > 0) {
+      // Si des items sont passés en prop, les utiliser
+      setItems(propItems);
+    } else {
+      // Sinon, récupérer tous les mangas
+      axios.get('http://localhost:8080/api/manga')
+        .then(res => setItems(res.data))
+        .catch(err => console.error('Erreur:', err));
+    }
+  }, [propItems]);
 
   return (
     <div className="flex flex-wrap justify-center gap-5 w-4/5 mx-auto mt-[1%]">
