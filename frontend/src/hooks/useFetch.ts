@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { logger } from '../services/logger';
 
 interface UseFetchOptions {
   enabled?: boolean;
@@ -20,13 +21,15 @@ export const useFetch = <T,>(url: string, options: UseFetchOptions = {}) => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        logger.info(`Fetching data from ${url}`);
         const response = await axios.get<T>(url);
         setData(response.data);
         setError(null);
+        logger.debug(`Successfully fetched data from ${url}`, { size: JSON.stringify(response.data).length });
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Erreur lors de la requête';
         setError(errorMessage);
-        console.error('Fetch error:', err);
+        logger.error(`Failed to fetch from ${url}`, err);
       } finally {
         setLoading(false);
       }
