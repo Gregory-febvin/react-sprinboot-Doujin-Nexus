@@ -1,36 +1,27 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useFetch } from '../hooks/useFetch';
+import type { Manga } from '../types';
+import { API_ENDPOINTS } from '../config/api';
 import Home from '../page/Home';
+import { LoadingSpinner, ErrorMessage } from './shared/LoadingSpinner';
 
 interface SearchResultsProps {
   type: string;
 }
 
 export default function SearchResults({ type }: SearchResultsProps) {
-  const { query } = useParams();
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { query } = useParams<{ query: string }>();
+  const url = query ? `${API_ENDPOINTS[type.toUpperCase() as keyof typeof API_ENDPOINTS]}/search/${query}` : '';
+  const { data: items, loading, error } = useFetch<Manga>(url);
 
-  useEffect(() => {
-    if (type && query) {
-      const apiUrl = `http://localhost:8080/api/${type}/search/${query}`;
-      
-      axios.get(apiUrl)
-        .then(res => setItems(res.data))
-        .catch(err => console.error('Erreur:', err))
-        .finally(() => setLoading(false));
-    }
-  }, [type, query]);
-
-  if (loading) return <p className='text-white text-center p-10'>Chargement...</p>;
-
-  if (items.length === 0) return <p className='text-white text-center p-10'>Aucun résultat</p>;
+  if (loading) return <LoadingSpinner message="Recherche en cours..." />;
+  if (error) return <ErrorMessage message={`Erreur: ${error}`} />;
+  if (!items || items.length === 0) return <ErrorMessage message={`Aucun résultat pour "${query}"`} />;
 
   return (
     <div>
       <h1 className='text-3xl font-bold text-white p-5 text-center'>
-        Résultats pour {query}
+        Résultats pour <span className='text-green-400'>{query}</span>
       </h1>
       <Home items={items} />
     </div>

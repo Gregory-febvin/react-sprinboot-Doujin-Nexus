@@ -1,7 +1,5 @@
-// Tabs.jsx
 import Header from './Header';
 import Tabs from './Tabs';
-
 import { Outlet } from 'react-router-dom';
 
 export default function Layout() {

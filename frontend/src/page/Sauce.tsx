@@ -1,26 +1,24 @@
-// Sauce.jsx
-import { Route, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-
+import { useParams } from 'react-router-dom';
+import { useFetch } from '../hooks/useFetch';
+import type { Manga } from '../types';
+import { API_ENDPOINTS } from '../config/api';
 import Infos from '../component/Infos';
 import Thumbnail from '../component/Thumbnails';
+import { LoadingSpinner, ErrorMessage } from '../component/shared/LoadingSpinner';
 
 export default function Sauce() {
-  const { id } = useParams();
-  const [sauce, setSauce] = useState(null);
+  const { id } = useParams<{ id: string }>();
+  const url = id ? `${API_ENDPOINTS.MANGA}/${id}` : '';
+  const { data: sauce, loading, error } = useFetch<Manga>(url);
 
-  useEffect(() => {
-    axios(`http://127.0.0.1:8080/api/manga/${id}`)
-      .then(res => setSauce(res.data))
-      .catch(err => console.error('Erreur:', err));
-  }, [id]);
+  if (loading) return <LoadingSpinner message="Chargement du manga..." />;
+  if (error) return <ErrorMessage message={error} />;
+  if (!sauce) return <ErrorMessage message="Manga non trouvé" />;
 
   return (
-  <div className='sauce'>
-    <Infos sauce={sauce} />
-    <Thumbnail sauce={sauce}/>
-  </div>
+    <div className='sauce'>
+      <Infos sauce={sauce} />
+      <Thumbnail sauce={sauce} />
+    </div>
   );
 }
-
